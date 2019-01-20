@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+import dr_eis.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('blog.urls')),
+    url(r'^data.json$', dr_eis.views.data_json),
+    url(r'^hichart/', dr_eis.views.hichart_sample),
+    url(r'^chartjs/', dr_eis.views.chartjs_sample),
+    url(r'^json_data$', dr_eis.views.json_data, name='json_data'),
 ]

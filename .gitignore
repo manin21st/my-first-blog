@@ -6,4 +6,4 @@ db.sqlite3
 /static
 .DS_Store
 .idea
-*.exe
+instantclient_18_3
