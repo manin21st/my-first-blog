@@ -3,6 +3,7 @@
 from django.shortcuts import render, HttpResponse, render_to_response
 import random, json
 import cx_Oracle
+import dr_eis.models as mdl
 
 # Create your views here.
 def data_json(request):
@@ -45,3 +46,9 @@ def json_data(request):
 
     return HttpResponse(json.dumps(data), content_type='text/json')
 
+#영업정보-계획대비매출실적
+def sales_pvsr(request):
+    cdata1 = mdl.SalesPvsrCym.objects.filter(yymm__startswith='2018').order_by('yymm')
+    cdata2 = mdl.SalesPvsrCy.objects.filter(yyyy__startswith='2018').order_by('yyyy')
+    ldata1 = mdl.SalesPvsrYm.objects.filter(yymm__startswith='2018').order_by('yymm')
+    return render(request, 'sales_pvsr.html', {'cdata1': cdata1, 'cdata2': cdata2, 'ldata1': ldata1})
