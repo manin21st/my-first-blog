@@ -51,4 +51,5 @@ def sales_pvsr(request):
     cdata1 = mdl.SalesPvsrCym.objects.filter(yymm__startswith='2018').order_by('yymm')
     cdata2 = mdl.SalesPvsrCy.objects.filter(yyyy__startswith='2018').order_by('yyyy')
     ldata1 = mdl.SalesPvsrYm.objects.filter(yymm__startswith='2018').order_by('yymm')
-    return render(request, 'sales_pvsr.html', {'cdata1': cdata1, 'cdata2': cdata2, 'ldata1': ldata1})
+    #return render(request, 'sales_pvsr.html', {'cdata1': cdata1, 'cdata2': cdata2, 'ldata1': ldata1})
+    return render(request, 'sales_pvsr.html', {'cdata1': list(cdata1)})

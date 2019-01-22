@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+    {% for cdata in cdata1 %}
+        <h1>{{ cdata.yymm }}</h1>
+    {% endfor %}
+
     <canvas id="Chart1"></canvas>
     <script>
     var ctx = document.getElementById("Chart1").getContext('2d');
