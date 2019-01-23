@@ -18,11 +18,10 @@ from django.contrib import admin
 import dr_eis.views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     #url(r'', include('blog.urls')),
-    url(r'^data.json$', dr_eis.views.data_json),
-    url(r'^hichart/', dr_eis.views.hichart_sample),
-    url(r'^$', dr_eis.views.chartjs_sample),
+    #url(r'^$', dr_eis.views.chartjs_sample),
+    url(r'^$', include('dr_eis.urls')),
+    url(r'^admin/', admin.site.urls),
     url(r'^json_data$', dr_eis.views.json_data, name='json_data'),
     url(r'^sales_pvsr$', dr_eis.views.sales_pvsr),  #영업정보-계획대비매출실적
 ]

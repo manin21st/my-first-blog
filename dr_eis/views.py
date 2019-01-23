@@ -3,35 +3,11 @@
 from django.shortcuts import render, HttpResponse, render_to_response
 import random, json
 import cx_Oracle
+from rest_framework import viewsets
 import dr_eis.models as mdl
+import dr_eis.serializers as srlz
 
 # Create your views here.
-def data_json(request):
-    Fluctuation_ratio = 50  # 등락비율(%)
-    ratio = Fluctuation_ratio / float(100)
-    init_cost = 1000000  # 백만원
-    Counts = [None, ]
-    Costs = ['주식가격', ]
-
-    for i in range(1, 101):
-        Counts.append(str(i))
-        if random.choice((True, False)):
-            init_cost += init_cost * ratio
-            Costs.append(init_cost)
-        else:
-            init_cost -= init_cost * ratio
-            Costs.append(init_cost)
-    data = {
-        'columns': [
-            Counts,
-            Costs,
-        ]
-    }
-    return HttpResponse(json.dumps(data), content_type='text/json')
-
-def hichart_sample(request):
-    return render_to_response('hichart_sample.html')
-
 def chartjs_sample(request):
     return render_to_response('chartjs_sample.html')
 
@@ -53,3 +29,18 @@ def sales_pvsr(request):
     ldata1 = mdl.SalesPvsrYm.objects.filter(yymm__startswith='2018').order_by('yymm')
     #return render(request, 'sales_pvsr.html', {'cdata1': cdata1, 'cdata2': cdata2, 'ldata1': ldata1})
     return render(request, 'sales_pvsr.html', {'cdata1': list(cdata1)})
+
+#영업정보-계획대비매출실적-년간월별그래프
+class SalesPvsrCymViewSet(viewsets.ModelViewSet):
+    queryset = mdl.SalesPvsrCym.objects.all()
+    serializer_class = srlz.SalesPvsrCymSerializer
+
+#영업정보-계획대비매출실적-5개년그래프
+class SalesPvsrCyViewSet(viewsets.ModelViewSet):
+    queryset = mdl.SalesPvsrCy.objects.all()
+    serializer_class = srlz.SalesPvsrCySerializer
+
+#영업정보-계획대비매출실적-년간월별리스트
+class SalesPvsrYmViewSet(viewsets.ModelViewSet):
+    queryset = mdl.SalesPvsrYm.objects.all()
+    serializer_class = srlz.SalesPvsrYmSerializer
